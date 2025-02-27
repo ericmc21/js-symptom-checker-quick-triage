@@ -2,56 +2,53 @@
  * Created by Tomasz Gabrysiak @ Infermedica on 02/02/2017.
  */
 
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   context: __dirname,
-  entry: './src/index.js',
-  devtool: 'source-map',
+  entry: "./src/index.js",
+  devtool: "source-map",
   output: {
-    path: path.join(__dirname, '/public'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, "/public"),
+    filename: "bundle.js",
   },
   devServer: {
-    publicPath: '/public/',
+    publicPath: "/public/",
     inline: true,
-    host: '127.0.0.1'
+    host: "127.0.0.1",
   },
   resolve: {
-    extensions: ['.js', '.json']
+    extensions: [".js", ".json"],
   },
   stats: {
     colors: true,
     reasons: true,
-    chunks: false
+    chunks: false,
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        exclude: /node_modules/
-      }, {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include: path.resolve(__dirname, 'src'),
+        loader: "babel-loader",
+        include: path.resolve(__dirname, "src"),
         query: {
-          plugins: ['@babel/transform-runtime'],
-          presets: ['@babel/preset-env']
-        }
-      }, {
+          plugins: ["@babel/transform-runtime"],
+          presets: ["@babel/preset-env"],
+        },
+      },
+      {
         test: /\.css$/,
-        use: ['style-loader', {loader: 'css-loader'}]
+        use: ["style-loader", { loader: "css-loader" }],
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&minetype=application/font-woff&name=[path][name].[ext]'
+        loader:
+          "url-loader?limit=10000&minetype=application/font-woff&name=[path][name].[ext]",
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader?name=[path][name].[ext]'
-      }
-    ]
-  }
+        loader: "file-loader?name=[path][name].[ext]",
+      },
+    ],
+  },
 };

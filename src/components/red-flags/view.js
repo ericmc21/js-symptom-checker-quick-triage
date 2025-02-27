@@ -2,8 +2,8 @@
  * Created by Eric McLean @ Infermedica on 09/05/2022.
  */
 
-import View from '../../base/view';
-import template from './template';
+import View from "../../base/view";
+import template from "./template";
 
 export default class RedFlagsView extends View {
   constructor(el, context) {
@@ -11,10 +11,10 @@ export default class RedFlagsView extends View {
 
     const handleSymptomsChange = (e) => {
       const group = {};
-      this.el.querySelectorAll('.input-symptom').forEach((item) => {
+      this.el.querySelectorAll(".input-symptom").forEach((item) => {
         // we do not mark any symptoms that comes from suggest as absent
         if (item.checked) {
-          group[item.id] = {reported: true, source: 'suggest'};
+          group[item.id] = { reported: true, source: "suggest" };
         } else {
           // completely remove this symptom
           this.context.patient.removeSymptom(item.id);
@@ -25,12 +25,59 @@ export default class RedFlagsView extends View {
     };
 
     const binds = {
-      '.input-symptom': {
-        type: 'change',
-        listener: handleSymptomsChange
-      }
+      ".input-symptom": {
+        type: "change",
+        listener: handleSymptomsChange,
+      },
     };
 
     super(el, template, context, binds);
+    // ✅ Call updateTriage after the instance is initialized
+    this.initTriage();
+  }
+
+  async initTriage() {
+    // Ensure context exists before making the call
+    if (!this.context || !this.context.api) {
+      console.error("Context or API not available.");
+      return;
+    }
+
+    console.log("Initializing triage...");
+
+    try {
+      // Assume an empty list or previously stored observations
+      const observations = this.context.patient.observations || [];
+      await this.updateTriage(observations);
+    } catch (error) {
+      console.error("Error initializing triage:", error);
+    }
+  }
+
+  async updateTriage(observations) {
+    const evidence = observations.map((obs) => ({
+      id: obs.id,
+      source: "initial",
+      choice_id: obs.choice_id,
+    }));
+
+    console.log(evidence);
+
+    const payload = {
+      evidence,
+      sex: this.context.patient.sex,
+      age: this.context.patient.age,
+    };
+
+    console.log("Triage request payload:", JSON.stringify(payload, null, 2));
+
+    try {
+      const result = await this.context.api.triage(payload);
+      console.log("Triage response:", result);
+      this.context.api.triageLevel = result.triage_level;
+      this.render();
+    } catch (error) {
+      console.error("Error in triage:", error);
+    }
   }
 }
