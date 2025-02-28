@@ -15,6 +15,7 @@ export default class QuestionView extends View {
         });
         this.context.patient.addSymptomsGroup(group);
         this.destroy();
+        this.updateTriageDisplay();
         this.render();
       } else {
         const val = {
@@ -75,9 +76,6 @@ export default class QuestionView extends View {
 
       // ✅ Store data in context before rendering
       this.context.api.triageFormatted = data.triage_level;
-
-      // ✅ Trigger re-render
-      this.render();
     } catch (error) {
       console.error("Error fetching formatted triage data:", error);
     }

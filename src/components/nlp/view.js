@@ -103,6 +103,7 @@ export default class NLPView extends View {
       return [item.id, val];
     });
     const o = _.fromPairs(pairs);
+    console.log("saving symptoms");
     this.context.patient.addSymptomsGroup(o);
   }
 

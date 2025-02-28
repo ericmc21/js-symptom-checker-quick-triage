@@ -2,13 +2,13 @@
  * Created by Tomasz Gabrysiak @ Infermedica on 03/02/2017.
  */
 
-import _ from 'lodash';
+import _ from "lodash";
 
 export default class Patient {
   constructor() {
     this.symptoms = {};
-    this.sex = 'male';
-    this.age = {value: 30};
+    this.sex = "male";
+    this.age = { value: 30 };
   }
 
   setSex(sex) {
@@ -16,7 +16,7 @@ export default class Patient {
   }
 
   setAge(age) {
-    this.age = {value: age};
+    this.age = { value: age };
   }
 
   addSymptomsGroup(group) {
@@ -31,38 +31,38 @@ export default class Patient {
     const res = {
       sex: this.sex,
       age: this.age,
-      evidence: []
+      evidence: [],
     };
 
     res.evidence = _.map(this.symptoms, (symptom, symptomId) => {
       const getChoiceId = (choice) => {
         if (choice === true) {
-          return 'present';
+          return "present";
         }
         if (choice === false) {
-          return 'absent';
+          return "absent";
         }
-        return 'unknown';
+        return "unknown";
       };
 
       const diagnosisSymptom = {
         id: symptomId,
-        choice_id: getChoiceId(symptom.reported)
+        choice_id: getChoiceId(symptom.reported),
       };
 
-      if (symptom.source === 'initial') {
+      if (symptom.source === "initial") {
         Object.assign(diagnosisSymptom, {
-          source: 'initial'
+          source: "initial",
         });
       }
 
-      if (symptom.source === 'suggest') {
+      if (symptom.source === "suggest") {
         Object.assign(diagnosisSymptom, {
-          source: 'suggest'
+          source: "suggest",
         });
       }
 
-      console.log(diagnosisSymptom);
+      // console.log(diagnosisSymptom);
       return diagnosisSymptom;
     });
     return res;
@@ -76,7 +76,7 @@ export default class Patient {
     return {
       text,
       sex: this.sex,
-      age: this.age
+      age: this.age,
     };
   }
 

@@ -56,24 +56,11 @@ export default class SuggestView extends View {
   }
 
   async updateTriage(observations) {
-    const evidence = observations.map((obs) => ({
-      id: obs.id,
-      source: "initial",
-      choice_id: obs.choice_id,
-    }));
-
-    console.log(evidence);
-
-    const payload = {
-      evidence,
-      sex: this.context.patient.sex,
-      age: this.context.patient.age,
-    };
-
-    console.log("Triage request payload:", JSON.stringify(payload, null, 2));
-
     try {
-      const result = await this.context.api.triage(payload);
+      const result = await this.context.api.triage(
+        this.context.patient.toDiagnosis()
+      );
+
       console.log("Triage response:", result);
       this.context.api.triageLevel = result.triage_level;
       this.render();
