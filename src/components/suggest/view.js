@@ -12,13 +12,11 @@ export default class SuggestView extends View {
     const handleSymptomsChange = (e) => {
       const group = {};
       this.el.querySelectorAll(".input-symptom").forEach((item) => {
-        // we do not mark any symptoms that comes from suggest as absent
-        if (item.checked) {
-          group[item.id] = { reported: true, source: "suggest" };
-        } else {
-          // completely remove this symptom
-          this.context.patient.removeSymptom(item.id);
-        }
+        // ✅ Record both checked and unchecked symptoms
+        group[item.id] = {
+          reported: item.checked,
+          source: "suggest",
+        };
       });
 
       this.context.patient.addSymptomsGroup(group);

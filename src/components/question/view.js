@@ -69,7 +69,10 @@ export default class QuestionView extends View {
 
   async updateTriageDisplay() {
     try {
-      console.log("Amy I getting called again?");
+      console.log(
+        "Evidence list: " +
+          JSON.stringify(this.context.patient.toDiagnosis(), null, 2)
+      );
       const data = await this.context.api.triage(
         this.context.patient.toDiagnosis()
       );

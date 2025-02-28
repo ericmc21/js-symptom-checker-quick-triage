@@ -26,7 +26,7 @@ export default class NLPView extends View {
     const binds = {
       "#input-feel": {
         type: "input",
-        listener: _.debounce(handleFeelChange, 400),
+        listener: _.debounce(handleFeelChange, 1000),
       },
     };
 

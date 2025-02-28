@@ -12,13 +12,11 @@ export default class RedFlagsView extends View {
     const handleSymptomsChange = (e) => {
       const group = {};
       this.el.querySelectorAll(".input-symptom").forEach((item) => {
-        // we do not mark any symptoms that comes from suggest as absent
-        if (item.checked) {
-          group[item.id] = { reported: true, source: "suggest" };
-        } else {
-          // completely remove this symptom
-          this.context.patient.removeSymptom(item.id);
-        }
+        // ✅ Record both checked and unchecked symptoms
+        group[item.id] = {
+          reported: item.checked,
+          source: "suggest",
+        };
       });
 
       this.context.patient.addSymptomsGroup(group);
@@ -61,7 +59,11 @@ export default class RedFlagsView extends View {
       );
       console.log("Triage response:", result);
       this.context.api.triageLevel = result.triage_level;
-      this.render();
+      // ✅ Only call render if it hasn’t been triggered before
+      if (!this.hasRendered) {
+        this.hasRendered = true;
+        this.render();
+      }
     } catch (error) {
       console.error("Error in triage:", error);
     }
