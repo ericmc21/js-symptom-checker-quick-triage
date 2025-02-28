@@ -2,14 +2,14 @@
  * Created by Tomasz Gabrysiak @ Infermedica on 08/02/2017.
  */
 
-import View from '../../base/view';
-import template from './template';
+import View from "../../base/view";
+import template from "./template";
 
 export default class QuickTriageiew extends View {
   constructor(el, context) {
     const getExplanationMarkup = (data) => {
-      let supporting = '';
-      let conflicting = '';
+      let supporting = "";
+      let conflicting = "";
 
       for (const e of data.supporting_evidence) {
         supporting += `<li><i class="text-success fa fa-fw fa-plus-circle"></i> ${e.common_name}</li>`;
@@ -40,27 +40,47 @@ export default class QuickTriageiew extends View {
 
     const handleExplainRequested = (e) => {
       e.preventDefault();
-      const {id} = e.target.dataset;
-      const el = e.target.parentNode.parentNode.querySelector('.explanation');
+      const { id } = e.target.dataset;
+      const el = e.target.parentNode.parentNode.querySelector(".explanation");
 
       if (!el.innerHTML) {
-        el.innerHTML = '<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> one second..';
-        context.api.explain(Object.assign(context.patient.toDiagnosis(), {target: id})).then((data) => {
-          el.innerHTML = getExplanationMarkup(data);
-          return el.innerHTML;
-        });
+        el.innerHTML =
+          '<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> one second..';
+        context.api
+          .explain(Object.assign(context.patient.toDiagnosis(), { target: id }))
+          .then((data) => {
+            el.innerHTML = getExplanationMarkup(data);
+            return el.innerHTML;
+          });
       } else {
-        el.innerHTML = '';
+        el.innerHTML = "";
       }
     };
 
     const binds = {
-      '.explain': {
-        type: 'click',
-        listener: handleExplainRequested
-      }
+      ".explain": {
+        type: "click",
+        listener: handleExplainRequested,
+      },
     };
 
     super(el, template, context, binds);
+    this.updateTriageDisplay();
+  }
+
+  async updateTriageDisplay() {
+    try {
+      const data = await this.context.api.triage(
+        this.context.patient.toDiagnosis()
+      );
+
+      // ✅ Store data in context before rendering
+      this.context.api.triageFormatted = data.triage_level;
+
+      // ✅ Trigger re-render
+      this.render();
+    } catch (error) {
+      console.error("Error fetching formatted triage data:", error);
+    }
   }
 }
