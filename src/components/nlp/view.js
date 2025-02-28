@@ -16,8 +16,9 @@ export default class NLPView extends View {
           .parse(this.context.patient.toParse(feel))
           .then((response) => {
             console.log(response);
-            this.updateTriage(response.mentions);
-            return this.updateObservations(response.mentions);
+
+            this.updateObservations(response.mentions);
+            this.updateTriage(this.context.patient.observations);
           });
       }
     };
@@ -30,7 +31,7 @@ export default class NLPView extends View {
     };
 
     super(el, template, context, binds);
-    this.observations = {};
+    this.observations = this.context.patient.observations || [];
   }
 
   async updateTriage(observations) {
@@ -51,18 +52,36 @@ export default class NLPView extends View {
     try {
       const result = await this.context.api.triage(payload);
       console.log("Triage response:", result);
+      // ✅ Update triage level
       this.context.api.triageLevel = result.triage_level;
+
+      // ✅ Preserve observations before rendering
+      this.context.patient.observations = [...this.observations];
+
+      // ✅ Re-render to update triage level
       this.render();
-      this.updateObservations;
+
+      // ✅ Restore observations after re-render
+      setTimeout(() => {
+        this.updateObservations(this.context.patient.observations);
+      }, 0);
     } catch (error) {
       console.error("Error in triage:", error);
     }
   }
 
-  updateObservations(observations) {
-    this.observations = observations;
+  updateObservations(newObservations) {
+    // ✅ Merge new observations with existing ones
+    newObservations.forEach((newObs) => {
+      // Check if observation already exists
+      if (!this.observations.some((obs) => obs.id === newObs.id)) {
+        this.observations.push(newObs);
+      }
+    });
+
+    this.context.patient.observations = this.observations; // ✅ Ensure persistence
     let t = "";
-    for (const o of observations) {
+    for (const o of this.observations) {
       t += `
         <li>
           <i class="text-${o.choice_id === "present" ? "success" : "danger"} 
@@ -73,7 +92,15 @@ export default class NLPView extends View {
         </li>
       `;
     }
-    this.el.querySelector("#observations").innerHTML = t;
+    setTimeout(() => {
+      const observationsContainer = this.el.querySelector("#observations");
+      if (observationsContainer) {
+        observationsContainer.innerHTML = t;
+      } else {
+        console.warn("⚠️ Observations container not found after render.");
+      }
+    }, 0);
+
     this.checkObservations();
   }
 

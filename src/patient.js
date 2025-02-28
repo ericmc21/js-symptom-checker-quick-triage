@@ -9,6 +9,7 @@ export default class Patient {
     this.symptoms = {};
     this.sex = "male";
     this.age = { value: 30 };
+    this.observations = [];
   }
 
   setSex(sex) {
