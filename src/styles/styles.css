@@ -1,38 +1,90 @@
+/* Reset default padding */
 .main-container {
     padding: 0;
 }
 
+/* Improved card styling */
 .card {
-    border-radius: 0;
-    border: none;
+    border-radius: 6px; /* Slight rounding for modern look */
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #fff;
+    padding: 15px; /* Added padding for spacing */
+    transition: all 0.3s ease-in-out;
 }
 
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slight hover effect */
+}
+
+/* Summary item styling */
 .summary-item {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 1.4;
 }
 
+/* Step container for consistent sizing */
 #step-container {
     min-height: 470px;
-    padding: 12px 20px;
+    padding: 15px 20px;
+    background: #f8f9fa; /* Light background for contrast */
+    border-radius: 6px;
 }
 
+/* Improved button styling */
 button {
     cursor: pointer;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    transition: background 0.3s ease-in-out;
 }
 
+button:hover {
+    background-color: #0056b3;
+}
 
+button:active {
+    background-color: #004494;
+}
+
+/* Responsive adjustments */
 @media (min-width: 576px) {
     body {
         padding-top: 15px;
+        background-color: #f4f4f4; /* Light gray background */
     }
 
     .main-container {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding: 0 15px;
     }
 
     .card {
-        border-radius: 4px;
+        border-radius: 6px;
         border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+}
+
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+    .card {
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    #step-container {
+        min-height: 500px;
+    }
+}
+
+/* Desktop screens */
+@media (min-width: 1024px) {
+    .main-container {
+        max-width: 900px;
+        margin: auto;
     }
 }
