@@ -76,6 +76,9 @@ export default class QuickTriageiew extends View {
 
       // ✅ Store data in context before rendering
       this.context.api.triageFormatted = data.triage_level;
+      this.context.api.triagePayload = JSON.stringify(
+        this.context.patient.toDiagnosis()
+      );
 
       // ✅ Trigger re-render
       this.render();

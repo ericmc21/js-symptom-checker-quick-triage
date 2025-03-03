@@ -53,6 +53,9 @@ export default class QuestionView extends View {
       .diagnosis(this.context.patient.toDiagnosis())
       .then((data) => {
         this.context.question = data.question;
+        this.context.has_emergency_evidence = data.has_emergency_evidence;
+        console.log(this.context.has_emergency_evidence);
+        console.log(data.has_emergency_evidence);
 
         // check stop condition
         if (data.should_stop === true) {
@@ -79,6 +82,9 @@ export default class QuestionView extends View {
 
       // ✅ Store data in context before rendering
       this.context.api.triageFormatted = data.triage_level;
+      this.context.api.triagePayload = JSON.stringify(
+        this.context.patient.toDiagnosis()
+      );
     } catch (error) {
       console.error("Error fetching formatted triage data:", error);
     }

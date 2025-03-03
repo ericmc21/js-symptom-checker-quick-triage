@@ -19,6 +19,7 @@ export default class InfermedicaApi {
     this.triageResult = null;
     this.triageLevel = null;
     this.hasEmergencyEvidence = null;
+    this.triagePayload = null;
   }
 
   getInterviewId() {

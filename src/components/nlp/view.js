@@ -47,10 +47,12 @@ export default class NLPView extends View {
       age: this.context.patient.age,
     };
 
+    this.context.api.triagePayload = JSON.stringify(payload, null, 2);
     console.log("Triage request payload: ", JSON.stringify(payload, null, 2));
 
     try {
       const result = await this.context.api.triage(payload);
+      console.log("Evidence list: " + JSON.stringify(payload, null, 2));
       console.log("Triage response:", result);
       // ✅ Update triage level
       this.context.api.triageLevel = result.triage_level;

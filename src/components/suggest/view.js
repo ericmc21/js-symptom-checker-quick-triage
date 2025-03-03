@@ -61,6 +61,9 @@ export default class SuggestView extends View {
 
       console.log("Triage response:", result);
       this.context.api.triageLevel = result.triage_level;
+      this.context.api.triagePayload = JSON.stringify(
+        this.context.patient.toDiagnosis()
+      );
       this.render();
     } catch (error) {
       console.error("Error in triage:", error);

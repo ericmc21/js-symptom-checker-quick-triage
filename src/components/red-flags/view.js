@@ -59,6 +59,9 @@ export default class RedFlagsView extends View {
       );
       console.log("Triage response:", result);
       this.context.api.triageLevel = result.triage_level;
+      this.context.api.triagePayload = JSON.stringify(
+        this.context.patient.toDiagnosis()
+      );
       // ✅ Only call render if it hasn’t been triggered before
       if (!this.hasRendered) {
         this.hasRendered = true;

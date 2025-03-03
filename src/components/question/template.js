@@ -97,7 +97,9 @@ const template = (context) => {
           : ""}
       </div>
       <p>Interview ID: ${context.api.interviewId}</p>
-      <p>${context.api.triageFormatted || "Processing..."}</p>
+      <p>Triage: ${context.api.triageFormatted || "Processing..."}</p>
+      <p>Has Emergency Evidence: ${context.has_emergency_evidence}</p>
+      <p>${context.api.triagePayload}</p>
       <!-- ✅ Ensure value is defined -->
     `);
   });

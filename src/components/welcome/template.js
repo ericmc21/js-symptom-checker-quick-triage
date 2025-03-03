@@ -5,12 +5,10 @@
 const template = (context) => {
   return new Promise((resolve) => {
     resolve(`
-      <h5 class="card-title">Welcome to the Quick Triage & Symptom Checker Demo</h5>
+      <h5 class="card-title">Welcome to the <b>Triage</b> vs. <b>has_emergency_evidence</b> Demo</h5>
       <div class="card-text">
         <p>
-          We created this example to help you work with our API, 
-          and show you how to implement a "quick triage" flow then also allows for the 
-          user to complete the full assessment.  
+          We created this example to view and compare an flow that calls  the /triage endpoint throughout the interview with instead using the has_emergency_evidence flag in the /diagnosis endpoint to trigger an interview stop if an emergency is suspected.
         </p>
         <p>
           Visit our 

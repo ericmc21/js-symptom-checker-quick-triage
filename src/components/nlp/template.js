@@ -49,6 +49,7 @@ const template = (context) => {
       </div>
       <p>Interview ID: ${context.api.interviewId}</p>
       <p>Triage: ${context.api.triageLevel}</p>
+      <p>${context.api.triagePayload}</p>
     `);
   });
 };
