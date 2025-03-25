@@ -5,40 +5,42 @@
 
 /* Improved card styling */
 .card {
-    border-radius: 6px; /* Slight rounding for modern look */
+    border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, 0.125);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
     background-color: #fff;
-    padding: 15px; /* Added padding for spacing */
+    padding: 24px; /* Increased padding */
     transition: all 0.3s ease-in-out;
+    font-size: 18px; /* Slightly larger font */
 }
 
 .card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slight hover effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
 }
 
 /* Summary item styling */
 .summary-item {
-    margin-bottom: 12px;
-    font-size: 16px;
-    line-height: 1.4;
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 1.5;
 }
 
 /* Step container for consistent sizing */
 #step-container {
-    min-height: 470px;
-    padding: 15px 20px;
-    background: #f8f9fa; /* Light background for contrast */
+    min-height: 520px;
+    padding: 24px 28px;
+    background: #f8f9fa;
     border-radius: 6px;
+    font-size: 18px;
 }
 
 /* Improved button styling */
 button {
     cursor: pointer;
-    padding: 10px 16px;
+    padding: 14px 20px;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 6px;
+    font-size: 18px;
     background-color: #007bff;
     color: white;
     transition: background 0.3s ease-in-out;
@@ -52,39 +54,59 @@ button:active {
     background-color: #004494;
 }
 
+.triage-highlight {
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 16px;
+}
+
+.emergency-highlight {
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #BC544B;
+    color: #fff;
+    border: 1px solid #ffeeba;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 16px;
+}
+
 /* Responsive adjustments */
 @media (min-width: 576px) {
     body {
-        padding-top: 15px;
-        background-color: #f4f4f4; /* Light gray background */
+        padding-top: 20px;
+        background-color: #f4f4f4;
+        font-size: 18px;
     }
 
     .main-container {
-        padding: 0 15px;
-    }
-
-    .card {
-        border-radius: 6px;
-        border: 1px solid rgba(0, 0, 0, 0.125);
+        padding: 0 20px;
     }
 }
 
 /* Tablet and larger screens */
 @media (min-width: 768px) {
     .card {
-        padding: 20px;
-        border-radius: 8px;
+        padding: 28px;
+        border-radius: 10px;
     }
 
     #step-container {
-        min-height: 500px;
+        min-height: 550px;
     }
 }
 
 /* Desktop screens */
 @media (min-width: 1024px) {
     .main-container {
-        max-width: 900px;
+        max-width: 960px;
         margin: auto;
     }
 }

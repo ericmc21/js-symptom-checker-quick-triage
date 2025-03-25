@@ -2,18 +2,18 @@
  * Created by Tomasz Gabrysiak @ Infermedica on 14/02/2017.
  */
 
-import Controller from './base/controller';
+import Controller from "./base/controller";
 
-import WelcomeView from './components/welcome/view';
-import BasicView from './components/basic/view';
-import SuggestView from './components/suggest/view';
-import NLPView from './components/nlp/view';
-import GeoRisksView from './components/geo-risks/view';
-import CommonRisksView from './components/common-risks/view';
-import QuestionView from './components/question/view';
-import SummaryView from './components/summary/view';
-import RedFlagsView from './components/red-flags/view';
-import QuickTriageView from './components/quick-triage/view';
+import WelcomeView from "./components/welcome/view";
+import BasicView from "./components/basic/view";
+import SuggestView from "./components/suggest/view";
+import NLPView from "./components/nlp/view";
+import GeoRisksView from "./components/geo-risks/view";
+import CommonRisksView from "./components/common-risks/view";
+import QuestionView from "./components/question/view";
+import SummaryView from "./components/summary/view";
+import RedFlagsView from "./components/red-flags/view";
+import QuickTriageView from "./components/quick-triage/view";
 
 export default class DemoController extends Controller {
   constructor(el) {
@@ -22,20 +22,20 @@ export default class DemoController extends Controller {
       welcome: WelcomeView,
       basic: BasicView,
       suggest: SuggestView,
-      'red-flags': RedFlagsView,
-      'quick-triage': QuickTriageView,
+      "red-flags": RedFlagsView,
+      "quick-triage": QuickTriageView,
       nlp: NLPView,
-      'geo-risks': GeoRisksView,
-      'common-risks': CommonRisksView,
+      "geo-risks": GeoRisksView,
+      "common-risks": CommonRisksView,
       question: QuestionView,
-      summary: SummaryView
+      summary: SummaryView,
     };
   }
 
   beforeSetView(name) {
     const ViewClass = this.viewMapper[name];
     if ([QuestionView, NLPView].includes(ViewClass)) {
-      document.getElementById('next-step').setAttribute('disabled', 'true');
+      document.getElementById("next-step").setAttribute("disabled", "true");
     }
   }
 }

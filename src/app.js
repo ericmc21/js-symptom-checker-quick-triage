@@ -2,84 +2,84 @@
  * Created by Tomasz Gabrysiak @ Infermedica on 03/02/2017.
  */
 
-import settings from './settings';
+import settings from "./settings";
 
-import template from './templates/base';
+import template from "./templates/base";
 
-import App from './base/app';
-import DemoController from './controller';
-import InfermedicaApi from './infermedica-api';
-import Patient from './patient';
-import EpicFhirClient from './epic-fhir-client';
+import App from "./base/app";
+import DemoController from "./controller";
+import InfermedicaApi from "./infermedica-api";
+import Patient from "./patient";
+import EpicFhirClient from "./epic-fhir-client";
 
-require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
-require('../node_modules/font-awesome/css/font-awesome.min.css');
+require("../node_modules/bootstrap/dist/css/bootstrap.min.css");
+require("../node_modules/font-awesome/css/font-awesome.min.css");
 
-require('./styles/styles.css');
+require("./styles/styles.css");
 
 export default class DemoApp extends App {
   constructor(el) {
     super(el, template);
 
-    this.api = new InfermedicaApi(settings['app-id'], settings['app-key']);
+    this.api = new InfermedicaApi(settings["app-id"], settings["app-key"]);
 
     this.patient = new Patient();
     this.epicfhirclient = new EpicFhirClient();
-    this.epicfhirclient.getRiskFactors('Calling risk factors bruh');
+    this.epicfhirclient.getRiskFactors("Calling risk factors bruh");
 
     this.currentStep = 0;
 
     this.views = [
       {
         context: {
-          api: this.api
+          api: this.api,
         },
-        view: 'welcome'
+        view: "welcome",
       },
       {
         context: {
           patient: this.patient,
           api: this.api,
-          epic: this.epicfhirclient
+          epic: this.epicfhirclient,
         },
-        view: 'basic'
-      },
-      {
-        context: {
-          api: this.api,
-          patient: this.patient
-        },
-        view: 'nlp'
+        view: "basic",
       },
       {
         context: {
           api: this.api,
           patient: this.patient,
-          epic: this.epicfhirclient
         },
-        view: 'common-risks'
+        view: "nlp",
       },
       {
         context: {
           api: this.api,
-          patient: this.patient
+          patient: this.patient,
+          epic: this.epicfhirclient,
         },
-        view: 'suggest'
+        view: "common-risks",
       },
       {
         context: {
           api: this.api,
-          patient: this.patient
+          patient: this.patient,
         },
-        view: 'red-flags'
+        view: "suggest",
       },
       {
+        context: {
+          api: this.api,
+          patient: this.patient,
+        },
+        view: "red-flags",
+      },
+      /* {
         context: {
           api: this.api,
           patient: this.patient
         },
         view: 'quick-triage'
-      },
+      },*/
       /*   {
         context: {
           api: this.api,
@@ -90,28 +90,28 @@ export default class DemoApp extends App {
       {
         context: {
           api: this.api,
-          patient: this.patient
+          patient: this.patient,
         },
-        view: 'question'
+        view: "question",
       },
       {
         context: {
           api: this.api,
-          patient: this.patient
+          patient: this.patient,
         },
-        view: 'summary'
-      }
+        view: "summary",
+      },
     ];
   }
 
   afterRender() {
-    this.nextButton = this.el.querySelector('#next-step');
-    this.nextButton.addEventListener('click', (e) => this.nextStep(e));
+    this.nextButton = this.el.querySelector("#next-step");
+    this.nextButton.addEventListener("click", (e) => this.nextStep(e));
   }
 
   startInterview() {
     this.controller = new DemoController(
-      this.el.querySelector('#step-container')
+      this.el.querySelector("#step-container")
     );
 
     const currentView = this.views[this.currentStep];

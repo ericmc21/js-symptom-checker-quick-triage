@@ -26,7 +26,9 @@ const template = (context) => {
           target="_blank"
           >${context.api.interviewId}</a
         >
-        <p>Triage: ${context.api.triageFormatted || "Processing..."}</p>
+        <p class="triage-highlight">
+          Triage: ${context.api.triageFormatted || "Processing..."}
+        </p>
         <p>${context.api.triagePayload}</p>
         <!-- ✅ Ensure value is defined -->
       `;
